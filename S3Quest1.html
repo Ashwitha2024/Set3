@@ -1,0 +1,82 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Rotate Array</title>
+    <style>
+      body {
+        font-family: Arial, sans-serif;
+        padding: 20px;
+      }
+      input,
+      button {
+        margin-top: 10px;
+        padding: 10px;
+        width: 50%;
+      }
+      button {
+        background-color: #007bff;
+        color: white;
+        border: none;
+        cursor: pointer;
+      }
+      button:hover {
+        background-color: #0056b3;
+      }
+      #result {
+        margin-top: 10px;
+      }
+    </style>
+  </head>
+  <body>
+    <h3>Rotate Array to the Right</h3>
+    <input
+      type="text"
+      id="arrayInput"
+      placeholder="Enter numbers separated by commas"
+    />
+    <input
+      type="number"
+      id="stepsInput"
+      placeholder="Enter number of steps (k)"
+    />
+    <button onclick="rotateArray()">Rotate Array</button>
+    <p id="result"></p>
+
+    <script>
+      function rotateArray() {
+        const input = document.getElementById("arrayInput").value;
+        const k = parseInt(document.getElementById("stepsInput").value);
+        const arr = input.split(",").map(Number); // Convert input to an array of numbers
+
+        if (arr.length === 0 || arr.includes(NaN) || isNaN(k) || k < 0) {
+          document.getElementById("result").textContent =
+            "Please enter valid numbers and steps.";
+          return;
+        }
+
+        const n = arr.length;
+        const steps = k % n; // Handle cases where k is greater than the array length
+
+        // Rotate the array in-place
+        reverse(arr, 0, n - 1); // Reverse the entire array
+        reverse(arr, 0, steps - 1); // Reverse the first k elements
+        reverse(arr, steps, n - 1); // Reverse the rest of the elements
+
+        document.getElementById(
+          "result"
+        ).textContent = `Rotated array: ${arr.join(", ")}`;
+      }
+
+      function reverse(arr, start, end) {
+        while (start < end) {
+          // Swap elements at start and end
+          [arr[start], arr[end]] = [arr[end], arr[start]];
+          start++;
+          end--;
+        }
+      }
+    </script>
+  </body>
+</html>
